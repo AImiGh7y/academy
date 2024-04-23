@@ -1,0 +1,16 @@
+name: main
+description: perform action
+inputs:
+  username:
+    description: "username"
+    required: true
+  image_name:
+    description: "Specifies the name for the generated Docker image."
+    required: true
+
+runs:
+  using: composite
+  steps:
+    run: | 
+      docker tag ${{image_name}} ${{username}}/${{image_name}}
+      docker push ${{username}}/${{image_name}}
