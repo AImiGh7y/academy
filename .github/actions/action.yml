@@ -1,0 +1,13 @@
+name: main
+description: perform action
+inputs:
+  Hello_World:
+    description: ""
+    required: true
+    default: "default value"
+runs:
+  using: composite
+  steps:
+    - run: |
+        echo "Hello World"
+      shell: bash
