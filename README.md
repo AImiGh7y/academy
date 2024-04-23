@@ -27,4 +27,4 @@ Before running this application, ensure you have the following installed:
 
 This project is licensed under the [MIT License](LICENSE).
 
----
+---# academy
