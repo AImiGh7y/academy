@@ -22,5 +22,7 @@ jobs:
         path_dockerfile: './Dockerfile'
         image_name: 'academy'
         tag_name: 'latest'
-
+        
+    - name: List Docker images
+      run: docker images
   

@@ -1,17 +1,35 @@
 name: main
 description: perform action
 inputs:
-  Hello_World:
-    description: ""
-    required: true
-    default: "default value"
+  path_dockerfile:
+    description: "Allows us to locate the correct Dockerfile, even if it has a different name or is located in a different directory."
+    required: false
+  image_name:
+    description: "Specifies the name for the generated Docker image."
+    required: false
+  tag_name:
+    description: "Specifies the tag to be added to the final image."
+    required: false
+
 runs:
   using: composite
   steps:
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag academy:$(date +%s)
+    - run: |
+        if [ -z "${{ inputs.tag_name }}" ]; then
+            echo "TAG=$(date +%s)" >> $GITHUB_ENV
+        else
+            echo "TAG=${{ inputs.tag_name }}" >> $GITHUB_ENV
+        fi
       shell: bash
-    
-    - name : list the docker images
-      run: docker images
+    - run: |
+        if [ -z "${{ inputs.path_dockerfile }}" ]; then
+            echo "DOCKERFILE_PATH=Dockerfile" >> $GITHUB_ENV
+        else
+            echo "DOCKERFILE_PATH=${{ inputs.path_dockerfile }}" >> $GITHUB_ENV
+        fi
+      shell: bash
+    - run: echo "DOCKER_IMAGE_NAME=${{ inputs.image_name }}:$TAG" >> $GITHUB_ENV
+      shell: bash
+    - name: Build docker image
+      run: docker build . --file $DOCKERFILE_PATH --tag $DOCKER_IMAGE_NAME
       shell: bash
