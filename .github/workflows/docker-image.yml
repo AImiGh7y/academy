@@ -14,10 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
 
     - name: Lists the docker images
       run: docker images 
     - uses: AImiGh7y/academy/.github/actions/docker_build@main
+
+    with:
+      path_dockerfile: './Dockerfile'
+      image_name: 'academy'
+      tag_name: 'latest'
 
   
